@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	
+    $('#id_trial').click(function() {
+  
+    alert("The button is clicked trying hard [again].");
+    
+    $.getJSON("/demo", function (data) {
+    	
+    	$("#ch_user1").empty();
+    	
+        $.each(data.xata, function (i, data) {
+        	
+            var div_data = "<option value=" + data.name + ">" + data.name + "</option>";
+            
+            $(div_data).appendTo('#ch_user1');
+
+        });
+    });
+  });
+});
+
+
+
+
+
+
+</script>
+</head>
+<body>
+<input type="button" id="id_trial" name="btn_trial" value="Trial Button..">
+
+<p></p>
+
+<div id="div_source1">
+    <select id="ch_user1" >
+        <option value="select"></option>
+    </select>
+</div>
+
+
+
+</body>
+</html>

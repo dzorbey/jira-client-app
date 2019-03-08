@@ -33,7 +33,7 @@ import com.app.client.Client;
 
 import com.google.api.client.http.HttpResponse;
 
-public class DemoServlet extends HttpServlet {
+public class BoardServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
@@ -43,7 +43,7 @@ public class DemoServlet extends HttpServlet {
 	private static JsonReader reader;
 
 	
-	public DemoServlet() {
+	public BoardServlet() {
 	   client = new Client("","");
 	}
 
@@ -54,31 +54,14 @@ public class DemoServlet extends HttpServlet {
 		
 	    URI uriPR =
 		        client.getService().getEndpoint(
-		            "https://jira-stats-api.appspot.com/stats/projects");
+		            "https://jira-stats-api.appspot.com/stats/boards");
 
-		    JsonObject jsonObject = executeHttpRequest(uriPR);
+		    JsonObject jsonObject = executeHttpRequest(uriPR,req.getHeader("inputHeader"));
 		
 		    resp.getWriter().println(jsonObject.toString());		
 	}
 	
 	
-	
-	
-	public String testing() throws IOException, SQLException {
-		  
-		   // String project = "ESBEP";
-//		    String board = "ESBEP BUGS from UAT";
-
-		    URI uriPR =
-		        client.getService().getEndpoint(
-		            "https://jira-stats-api.appspot.com/stats/projects");
-
-		    JsonObject jsonObject = executeHttpRequest(uriPR);
-
-
-		    return jsonObject.toString();
-		 	  
-	  }
 
 	  public JsonObject executeHttpRequest(URI uriPR, String header) throws IOException {
 

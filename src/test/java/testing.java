@@ -13,7 +13,7 @@ public class testing {
 		
 		DemoServlet testing = new DemoServlet();
 		
-		System.out.println(testing.testing());
+		//System.out.println(testing.testing());
 		
 		
 	}

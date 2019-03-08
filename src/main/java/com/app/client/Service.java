@@ -17,63 +17,14 @@ package com.app.client;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.UUID;
 
 import com.google.api.client.http.HttpResponse;
 
-/**
- * Abstract Bitbucket API service.
- * <em>As of version 2.0, this class has been changed to abstract.</em>
- * 
- * @author Kaz Nishimura
- * @since 1.0
- */
 public abstract class Service {
-
-  /**
-   * Indicates whether this object is authenticated or not.
-   * 
-   * @return <code>true</code> if this object is authenticated, or <code>false</code> otherwise
-   */
-
-  /**
-   * Returns the current user.
-   * 
-   * @return current user, or <code>null</code> if this object is not authenticated
-   * @throws IOException if an I/O error has occurred
-   * @since 2.0
-   */
-
-  /**
-   * Returns the Bitbucket user identified by a UUID.
-   * 
-   * @param uuid UUID of a Bitbucket user
-   * @return Bitbucket user
-   * @throws IOException if an I/O error has occurred
-   * @since 2.0
-   */
-
-  /**
-   * Returns the Bitbucket user identified by a name.
-   * 
-   * @param name name of a Bitbucket user
-   * @return Bitbucket user
-   * @throws IOException if an I/O error has occurred
-   * @since 2.0
-   */
-
-  /**
-   * Returns the Bitbucket user from an endpoint.
-   * 
-   * @param endpoint endpoint URI
-   * @return Bitbucket user
-   * @throws IOException if an I/O error has occurred
-   * @since 5.0
-   */
-
 
   public abstract URI getEndpoint(String path) throws IOException;
 
   public abstract HttpResponse executeURI(URI endpoint) throws IOException, InterruptedException;
 
+  public abstract HttpResponse executeURIHeader(URI endpoint,String header) throws IOException, InterruptedException;
 }

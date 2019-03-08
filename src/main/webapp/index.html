@@ -7,21 +7,55 @@ $(document).ready(function(){
 	
     $('#id_trial').click(function() {
   
-    alert("The button is clicked trying hard [again].");
-    
-    $.getJSON("/demo", function (data) {
-    	
-    	$("#ch_user1").empty();
-    	
-        $.each(data.xata, function (i, data) {
+    alert("The button is clicked trying hard [this is ajax call].");
+        
+    $.ajax({
+        type: "GET",
+        url:"/demo",
+        dataType: "json",
+        success: function (data) {
         	
-            var div_data = "<option value=" + data.name + ">" + data.name + "</option>";
-            
-            $(div_data).appendTo('#ch_user1');
+        	$("#ch_user1").empty();
+        	
+            $.each(data.xata, function (i, data) {
+            	
+                var div_data = "<option value=" + data.name + ">" + data.name + "</option>";
+                
+                $(div_data).appendTo('#ch_user1');
 
-        });
-    });
+            });
+            }
+      }); 
+    
   });
+    
+    
+    $('#id_trial2').click(function() {
+    	  
+        alert($("#ch_user1 :selected").text());
+            
+        $.ajax({
+            type: "GET",
+            url:"/board",
+            dataType: "json",
+            headers: {"inputHeader": $("#ch_user1 :selected").text()},
+            success: function (data) {
+            	
+            	$("#ch_user2").empty();
+            	
+                $.each(data.xata, function (i, data) {
+                	
+                    var div_data = "<option value=" + data.name + ">" + data.name + "</option>";
+                    
+                    $(div_data).appendTo('#ch_user2');
+
+                });
+                }
+          }); 
+        
+      });  
+    
+    
 });
 
 
@@ -42,6 +76,16 @@ $(document).ready(function(){
     </select>
 </div>
 
+
+<input type="button" id="id_trial2" name="btn_trial2" value="Trial Button2..">
+
+<p></p>
+
+<div id="div_source2">
+    <select id="ch_user2" >
+        <option value="select"></option>
+    </select>
+</div>
 
 
 </body>

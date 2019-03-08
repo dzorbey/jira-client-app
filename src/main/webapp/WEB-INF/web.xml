@@ -8,10 +8,25 @@
         <servlet-name>demo</servlet-name>
         <servlet-class>myapp.DemoServlet</servlet-class>
     </servlet>
-    <servlet-mapping>
+  
+  <servlet-mapping>
         <servlet-name>demo</servlet-name>
         <url-pattern>/demo</url-pattern>
     </servlet-mapping>
+    
+   
+    <servlet>
+        <servlet-name>board</servlet-name>
+        <servlet-class>myapp.BoardServlet</servlet-class>
+    </servlet>
+  
+    <servlet-mapping>
+        <servlet-name>board</servlet-name>
+        <url-pattern>/board</url-pattern>
+    </servlet-mapping>
+    
+    
+  
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>

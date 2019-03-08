@@ -24,12 +24,12 @@ import java.net.URI;
 import com.google.api.client.http.BasicAuthentication;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpExecuteInterceptor;
+import com.google.api.client.http.HttpHeaders;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.HttpResponseException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
-
 
 
 public class Client implements Serializable {
@@ -217,7 +217,32 @@ public class Client implements Serializable {
       }
       return httpResponse;
     }
+    
+    @Override
+    public HttpResponse executeURIHeader(URI endpoint, String header) throws IOException, InterruptedException {
+      HttpResponse httpResponse = null;
+      
+      try {
+        HttpRequest request =
+            getHttpTransport().createRequestFactory().buildGetRequest(
+                new GenericUrl(endpoint.toString()));
+        request.setInterceptor(authentication);
+        request.setThrowExceptionOnExecuteError(false);
+        request.setConnectTimeout(60000);
+        request.setReadTimeout(120000);
+       
+        HttpHeaders headers = new HttpHeaders();
+        headers.put("inputHeader", header);
+        request.setHeaders(headers);
 
+        return request.execute();
+      } catch (HttpResponseException e) {
+        System.out.println(e);
+      } catch (SocketTimeoutException e) {
+        System.out.println(e + ", URL : " + endpoint);
+      }
+      return httpResponse;
+    }
 
   }
 }

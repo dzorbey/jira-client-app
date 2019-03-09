@@ -17,6 +17,7 @@ package com.app.client;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.Map;
 
 import com.google.api.client.http.HttpResponse;
 
@@ -27,4 +28,6 @@ public abstract class Service {
   public abstract HttpResponse executeURI(URI endpoint) throws IOException, InterruptedException;
 
   public abstract HttpResponse executeURIHeader(URI endpoint,String header) throws IOException, InterruptedException;
+  
+  public abstract HttpResponse executeURIHeader(URI endpoint, Map<String, String> headers) throws IOException, InterruptedException;
 }

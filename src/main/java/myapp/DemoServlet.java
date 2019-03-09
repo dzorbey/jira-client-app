@@ -16,11 +16,19 @@
 
 package myapp;
 
+import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.net.URI;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -30,7 +38,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.app.client.Client;
-
 import com.google.api.client.http.HttpResponse;
 
 public class DemoServlet extends HttpServlet {
@@ -71,15 +78,51 @@ public class DemoServlet extends HttpServlet {
 
 		    URI uriPR =
 		        client.getService().getEndpoint(
-		            "https://jira-stats-api.appspot.com/stats/projects");
+		            "https://jira-stats-api.appspot.com/stats/issues");
 
 		    JsonObject jsonObject = executeHttpRequest(uriPR);
 
+		    Map<String, String> headers = new HashMap<String, String>();
+		    
+		    headers.put("inputHeaderProject", "ESBEP");
+		    headers.put("inputHeaderBoard", "ESBEP BUGS from UAT");
+		    
+		    
+		    System.out.println(((JsonObject) jsonObject).get("xata").toString());
+		    
+		    //System.out.println(jsonObject.get("xata"));
 
 		    return jsonObject.toString();
 		 	  
 	  }
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	 public void writing(String data) {
+		    try {
+		      File statText = new File("issue-relations.txt");
+		      FileOutputStream is = new FileOutputStream(statText);
+		      OutputStreamWriter osw = new OutputStreamWriter(is);
+		      Writer w = new BufferedWriter(osw);
+
+		      w.write(data);
+		      
+		      w.close();
+		    } catch (IOException e) {
+		      System.err.println("Problem writing to the file issue-relations.txt");
+		    }
+		  }
+	
+	
 	  public JsonObject executeHttpRequest(URI uriPR, String header) throws IOException {
 
 		    try {

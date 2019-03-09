@@ -4,11 +4,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
+
+	
 	
     $('#id_trial').click(function() {
   
-    alert("The button is clicked trying hard [this is ajax call].");
-        
+    $('#result1').html("Processing...");
     $.ajax({
         type: "GET",
         url:"/demo",
@@ -16,13 +17,12 @@ $(document).ready(function(){
         success: function (data) {
         	
         	$("#ch_user1").empty();
+        	$('#result1').html("");
         	
             $.each(data.xata, function (i, data) {
             	
-                var div_data = "<option value=" + data.name + ">" + data.name + "</option>";
-                
+                var div_data = "<option value=" + data.name + ">" + data.name + "</option>";            
                 $(div_data).appendTo('#ch_user1');
-
             });
             }
       }); 
@@ -31,9 +31,8 @@ $(document).ready(function(){
     
     
     $('#id_trial2').click(function() {
-    	  
-        alert($("#ch_user1 :selected").text());
-            
+
+        $('#result2').html("Processing...");                
         $.ajax({
             type: "GET",
             url:"/board",
@@ -42,6 +41,7 @@ $(document).ready(function(){
             success: function (data) {
             	
             	$("#ch_user2").empty();
+            	$('#result2').html("");
             	
                 $.each(data.xata, function (i, data) {
                 	
@@ -56,37 +56,91 @@ $(document).ready(function(){
       });  
     
     
+    
+    $('#id_trial3').click(function() {
+  	  
+        $('#result3').html("Processing again here [latest 10]...");
+        $.ajax({
+            type: "GET",
+            url:"/issues",
+            dataType: "json",
+            headers: {"inputHeaderProject": $("#ch_user1 :selected").text(),
+            	      "inputHeaderBoard": $("#ch_user2 :selected").text()},
+            success: function (data) {
+            	
+            	$('#result3').html("Result : , " + data.xata.name);
+            	
+                }
+          }); 
+        
+      });
+    
+    
+    
+    
+    
 });
-
-
-
-
 
 
 </script>
 </head>
 <body>
-<input type="button" id="id_trial" name="btn_trial" value="Trial Button..">
+
 
 <p></p>
 
+
 <div id="div_source1">
-    <select id="ch_user1" >
+
+ <label for="subject">
+    <input type="button" id="id_trial" name="btn_trial" value="Projects" style="width: 120px;">                     
+                    </label>
+    <select id="ch_user1" style="width: 120px;">
         <option value="select"></option>
     </select>
 </div>
 
+<p></p>
+<div id="result1"></div>
 
-<input type="button" id="id_trial2" name="btn_trial2" value="Trial Button2..">
 
+<!-- 
+<div id="div_source1">
+    <input type="button" id="id_trial" name="btn_trial" value="Trial Button.."><br> <select id="ch_user1" >
+        <option value="select"></option>
+    </select>
+    <br>
+</div>
+
+
+ -->
 <p></p>
 
 <div id="div_source2">
-    <select id="ch_user2" >
+ <label for="subject">
+    <input type="button" id="id_trial2" name="btn_trial2" value="Boards" style="width: 120px;">                    
+  </label>
+    <select id="ch_user2" style="width: 120px;">
         <option value="select"></option>
     </select>
 </div>
 
+<p></p>
+<p></p>
+<div id="result2"></div>
+<p></p>
+<p></p>
+
+<div id="div_source3">
+ <label for="subject">
+    <input type="button" id="id_trial3" name="btn_trial3" value="Issue Relations" style="width: 120px;">                   
+  </label>
+</div>
+
+
+<div id="result3"></div>
+
+<p></p>
 
 </body>
 </html>
